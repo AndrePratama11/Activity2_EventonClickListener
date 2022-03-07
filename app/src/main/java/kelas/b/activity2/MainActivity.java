@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         //membuat fungsi onclick pada button btnlogin
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View View) {
+            public void onClick(View view) {
 
                 //menyimpan input user user di edittext email kedalam variabel nama
                 nama = edemail.getText().toString();
@@ -42,26 +42,47 @@ public class MainActivity extends AppCompatActivity {
                 //menyimpan input user user di edittext password kedalam variabel password
                 password = edpassword.getText().toString();
 
-                //membuat variabel toast dan membuat toast dengan menambahkan variabel nama dan password
-                Toast t = Toast.makeText(getApplicationContext(),
-                        "email anda: "+nama+" dan Password anda: "+password+"", Toast.LENGTH_LONG);
+                String email = "Andre";
+                String pwd = "1234";
 
-                //membuat variabel toast dengan menambah variabel login sukses, password salah, email salah, email dan password salah
-                Toast u = Toast.makeText(getApplicationContext(),
-                        "Login Sukses",Toast.LENGTH_LONG);
-                Toast v = Toast.makeText(getApplicationContext(),
-                        "Email Salah",Toast.LENGTH_LONG);
-                Toast w = Toast.makeText(getApplicationContext(),
-                        "Password salah",Toast.LENGTH_LONG);
-                Toast x = Toast.makeText(getApplicationContext(),
-                        "Email dan Password Salah",Toast.LENGTH_LONG);
+                //mengecek apakah edittext email dan password terdapat isi atau tidak
+                if (nama.isEmpty() || password.isEmpty()) {
+                    //membuat variabel toast dan membuat toast dengan menambahkan variabel nama dan password
+                    Toast t = Toast.makeText(getApplicationContext(),
+                              "Email dan Password wajib diisi", Toast.LENGTH_LONG);
+                    //menampilkan toast
+                    t.show();
+                } else {
+                    //mengecek apakah isi dari email dan password sudah sama dengan email dan
+                    //password yang sudah di set
+                    if (nama.equals(email) && password.equals(pwd)) {
+                        //membuat toast  dan menampilkan pesan "Login Sukses"
+                        Toast t = Toast.makeText(getApplicationContext(),
+                                "Login Sukses", Toast.LENGTH_LONG);
+                        //menampilkan toast
+                        t.show();
 
-                //menampilkan toast
-                t.show();
-                u.show();
-                v.show();
-                w.show();
-                x.show();
+                        //membuat objek bundle
+                        Bundle b = new Bundle();
+
+                        //memasukkan value dari variabel nama dengan kunci "a"
+                        //dan dimasukkan kedalam bundle
+                        b.putString("a", nama.trim());
+                        b.putString("b", pwd.trim());
+
+                        //membuat objek intent berpindah activity dari mainactivity ke activityHasil
+                        Intent i = new Intent(getApplicationContext(), ActivityHasil.class);
+
+                        //memasukkan bundle kedalam intent untuk dikirimkan ke activity hasil
+                        i.putExtras(b);
+                        //berpindah ke activityHasil
+                        startActivity(i);
+                    } else {
+                        Toast t = Toast.makeText(getApplicationContext(),
+                                "Login Gagal", Toast.LENGTH_LONG);
+                        t.show();
+                    }
+                }
             }
         });
     }
